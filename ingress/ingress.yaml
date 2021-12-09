@@ -2,15 +2,23 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: marvel-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
   - http:
       paths:
       - path: /
+        pathType: Prefix
         backend:
-          serviceName: marvel-service
-          servicePort: 80
+          service:
+          name: marvel-service
+          port:
+            number: 80
       - path: /pay
+        pathType: Prefix
         backend:
-          serviceName: pay-service
-          servicePort: 80
+          service:
+          name: pay-service
+          port: 
+            number: 80
